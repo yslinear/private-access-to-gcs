@@ -8,3 +8,9 @@ compatibility_date = "2023-05-30"
 # - GCS_ACCESS_KEY_ID
 # - GCS_SECRET_ACCESS_KEY
 # Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
+
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
+	# or
+	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
+]
