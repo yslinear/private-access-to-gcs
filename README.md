@@ -15,5 +15,7 @@ routes = [
 ]
 --
 
+wrangler publish src/cache-api-worker.js
+or
 wrangler publish src/image-resizing-private-gcs.js
 ```
