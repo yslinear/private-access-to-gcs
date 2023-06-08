@@ -17,6 +17,7 @@ async function handleRequest(request) {
 	const pathname = url.pathname;
 	const gcsurl = `https://${hostname}${pathname}`
 	const signedRequest = await aws.sign(gcsurl);
+	console.log(JSON.stringify([...signedRequest.headers]));
 
 	return await fetch(signedRequest, {
 		"cf": {
