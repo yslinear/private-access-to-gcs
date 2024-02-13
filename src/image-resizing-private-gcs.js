@@ -23,6 +23,10 @@ async function handleRequest(request) {
     return new Response('Not Found', { status: 404 });
   }
 
+  if (url.searchParams.get("width") > 2000 || url.searchParams.get("height") > 2000) {
+    return new Response('Not Found', { status: 404 });
+  }
+
   const gcsurl = `https://${hostname}${pathname}`
   const signedRequest = await aws.sign(gcsurl);
   console.log(JSON.stringify([...signedRequest.headers]));
