@@ -10,7 +10,5 @@ compatibility_date = "2023-05-30"
 # Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
 
 routes = [
-	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
-	# or
-	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
+#	{ pattern = "image.shanlin.co/*", zone_id = "shanlin.co" }
 ]

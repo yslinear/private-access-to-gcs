@@ -15,6 +15,9 @@ addEventListener('fetch', function (event) {
 async function handleRequest(request) {
 	const url = new URL(request.url);
 	const pathname = url.pathname;
+	if (pathname === '/') {
+		return new Response('Not Found', { status: 404 });
+	}
 	const gcsurl = `https://${hostname}${pathname}`
 	const signedRequest = await aws.sign(gcsurl);
 	console.log(JSON.stringify([...signedRequest.headers]));
