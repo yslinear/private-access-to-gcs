@@ -22,34 +22,17 @@ async function handleRequest(request) {
 	const signedRequest = await aws.sign(gcsurl);
 	console.log(JSON.stringify([...signedRequest.headers]));
 
-	return await fetch(signedRequest, {
-		"cf": {
-			// resolveOverride,
-			cacheEverything: true,
-			cacheTtl: 30,
-			image: {
-				//anim: true,
-				//background: "#RRGGBB",
-				//blur: 50,
-				//border: {color: "#FFFFFF", width: 10},
-				//brightness: 0.5,
-				//compression: "fast",
-				//contrast: 0.5,
-				//dpr: 1,
-				//fit: "scale-down",
-				//format: "webp",
-				//gamma: 0.5,
-				//gravity: "auto",
-				//height: 250,
-				//metadata: "keep",
-				//onerror: "redirect",
-				//quality: 50,
-				rotate: 90,
-				"origin-auth": "share-publicly"
-				//sharpen: 2,
-				//trim: {"top": 12,  "right": 78, "bottom": 34, "left": 56,},
-				//width: 250,
-			}
-		}
-	})
+	let options = { cf: { image: { "origin-auth": "share-publicly" } } };
+	if (url.searchParams.has("fit")) options.cf.image.fit = url.searchParams.get("fit")
+	if (url.searchParams.has("width")) options.cf.image.width = url.searchParams.get("width")
+	if (url.searchParams.has("height")) options.cf.image.height = url.searchParams.get("height")
+	if (url.searchParams.has("quality")) options.cf.image.quality = url.searchParams.get("quality")
+	const accept = request.headers.get("Accept");
+	if (/image\/avif/.test(accept)) {
+		options.cf.image.format = 'avif';
+	} else if (/image\/webp/.test(accept)) {
+		options.cf.image.format = 'webp';
+	}
+
+	return await fetch(signedRequest, options)
 }
